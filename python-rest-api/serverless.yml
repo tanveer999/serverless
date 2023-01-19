@@ -7,13 +7,46 @@ provider:
   runtime: python3.8
   region: ap-south-1
 
-package:
-  # exclude deprecated
-  exclude: 
-    - test.py
+  vpc:
+    securityGroupIds:
+      - sg-052b5b2c047451d3f
+    subnetIds:
+      - subnet-0b8b73f5868e3c9f5
+  # rest api config
+  endpointType: PRIVATE
+  vpcEndpointIds:
+    - vpce-09facc99e9a652597
+  apiGateway:
+    resourcePolicy:
+      - Effect: Allow
+        Principal: '*'
+        Action: execute-api:Invoke
+        Resource:
+          - execute-api:/*/*/*
+      - Effect: Deny
+        Principal: '*'
+        Action: execute-api:Invoke
+        Resource: 
+          - execute-api:/*/*/*
+        Condition:
+          StringNotEquals:
+            aws:SourceVpc:
+              - vpc-0f2683e3a59d3c549
+        
+
+# package:
+#   # exclude deprecated
+#   patterns:
+#     - handler.py
+#     - requirements.txt
 
 functions:
   hello:
+    # vpc:
+    #   subnetIds:
+    #     - subnet-0b8b73f5868e3c9f5
+    #   securityGroupIds:
+    #     - sg-052b5b2c047451d3f
     handler: handler.hello
     events:
       - http:
@@ -21,6 +54,11 @@ functions:
           method: get
   
   dummyGet:
+    # vpc:
+    #   subnetIds:
+    #     - subnet-0b8b73f5868e3c9f5
+    #   securityGroupIds:
+    #     - sg-052b5b2c047451d3f
     handler: handler.get_dummy_data
     events:
       - http:
