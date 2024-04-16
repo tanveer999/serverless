@@ -40,3 +40,6 @@ admin.env
 .env
 _meta
 .serverless
+
+# set environment variables
+set-env.sh

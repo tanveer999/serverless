@@ -1,4 +1,4 @@
-service: python-rest-api
+service: python-private-rest-api
 
 frameworkVersion: '3'
 
@@ -9,17 +9,32 @@ provider:
   memorySize: 128
   deploymentBucket:
     name: ${env:AWS_DEPLOYMENT_S3}
-  role: ${env:AWS_LAMBDA_ROLE}
   vpc:
     securityGroupIds:
       - ${env:AWS_SG1}
     subnetIds:
       - ${env:AWS_SUBNET1}
   # rest api config
-  endpointType: REGIONAL
-  tags:
-    env: dev
-    app: demo
+  endpointType: PRIVATE
+  # vpcEndpointIds:
+  #   - ${env:AWS_VPCE_ID}
+  apiGateway:
+    resourcePolicy:
+      - Effect: Allow
+        Principal: '*'
+        Action: execute-api:Invoke
+        Resource:
+          - execute-api:/*/*/*
+      - Effect: Deny
+        Principal: '*'
+        Action: execute-api:Invoke
+        Resource: 
+          - execute-api:/*/*/*
+        Condition:
+          StringNotEquals:
+            aws:SourceVpc:
+              - ${env:AWS_VPC_1}
+              - ${env:AWS_VPC_2}
 
 # package:
 #   # exclude deprecated
