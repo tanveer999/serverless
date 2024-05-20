@@ -1,4 +1,4 @@
-service: lambda-container
+service: lambda-container-service
 
 provider:
   name: aws
@@ -17,7 +17,11 @@ provider:
   ecr:
     scanOnPush: false
     images:
-      lambdaimage2:
+      # lambdaimage2:
+        # path: .
+        # file: Dockerfile
+        # uri: 270009541057.dkr.ecr.ap-south-1.amazonaws.com/demo:dev1
+      lambdaimage1:
         path: .
         file: Dockerfile
 
@@ -27,6 +31,9 @@ functions:
   #   image:
   #     uri: ${env:AWS_ACCOUNT_ID}.dkr.ecr.ap-south-1.amazonaws.com/lambda-container:latest
       # skipCacheInvalidation: true
-  lambda-container-2:
-    name: lambda-container-2-${opt:stage}
-    image: lambdaimage2
+  # lambda-container-2:
+  #   name: lambda-container-2-${opt:stage}
+  #   image: lambdaimage2
+  lambda-container-1:
+    name: lambda-container-1-${opt:stage}
+    image: lambdaimage1

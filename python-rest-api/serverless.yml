@@ -10,12 +10,12 @@ provider:
   deploymentBucket:
     name: ${env:AWS_DEPLOYMENT_S3}
   role: ${env:AWS_LAMBDA_ROLE}
-  vpc:
-    securityGroupIds:
-      - ${env:AWS_SG1}
-    subnetIds:
-      - ${env:AWS_SUBNET1}
-  # rest api config
+  # vpc:
+  #   securityGroupIds:
+  #     - ${env:AWS_SG1}
+  #   subnetIds:
+  #     - ${env:AWS_SUBNET1}
+  ## rest api config
   endpointType: REGIONAL
   tags:
     env: dev
