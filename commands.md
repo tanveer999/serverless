@@ -1,4 +1,4 @@
-serverless or sls
+serverless or sls:
 
 1. to create serverless
     ```
