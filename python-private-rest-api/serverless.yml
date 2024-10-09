@@ -16,8 +16,8 @@ provider:
       - ${env:AWS_SUBNET1}
   # rest api config
   endpointType: PRIVATE
-  # vpcEndpointIds:
-  #   - ${env:AWS_VPCE_ID}
+  vpcEndpointIds:
+    - ${env:AWS_VPCE_ID}
   apiGateway:
     resourcePolicy:
       - Effect: Allow
@@ -34,7 +34,7 @@ provider:
           StringNotEquals:
             aws:SourceVpc:
               - ${env:AWS_VPC_1}
-              - ${env:AWS_VPC_2}
+                #   - ${env:AWS_VPC_2}
 
 # package:
 #   # exclude deprecated
